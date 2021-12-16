@@ -31,7 +31,7 @@ width: 90%;
 ${centerIt};
 `
 
-const AddList = ({onCloseTheForm}) => {
+const AddList = ({onCloseTheForm, onNewTasks}) => {
     const [addTask, setAddTask] = useState("")
 
     const addTaskHandler = (ev) => {
@@ -40,6 +40,14 @@ const AddList = ({onCloseTheForm}) => {
 
     const submitHandler = (ev) => {
         ev.preventDefault()
+
+        const newTasks = {
+            task: addTask,
+            id : Math.floor(Math.random() * 10000)
+        }
+
+        onNewTasks(newTasks)
+        setAddTask("")
 
     }
 

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { columnIt } from "./globalStyle";
 import Card from "./UI/Card";
 import AddList from "./components/AddList";
+import TaskList from "./components/TaskList";
 
 const MainContainer = styled.div`
 width: 100vw;
@@ -16,9 +17,22 @@ background-color: black;
 
 const App = () => {
   const [openForm, setOpenForm] = useState(false)
+  const [showList, setShowList] = useState([])
 
   const openFormToggle = () => {
     setOpenForm(!openForm)
+  }
+
+  
+
+  const showAddedList = (newTasks) => {
+    setShowList(prevList => {
+      return [newTasks, ...prevList]
+    })
+  }
+
+  const deleteList = (id) => {
+    setShowList(showList.filter(list => list.id !== id))
   }
 
   return (
@@ -28,8 +42,11 @@ const App = () => {
         <Header onOpenForm={openFormToggle} />
       )}
       {openForm && (
-      <AddList onCloseTheForm={openFormToggle}/>
+      <AddList onCloseTheForm={openFormToggle}
+      onNewTasks={showAddedList}
+      />
       )}
+      <TaskList datas={showList} ondeleteThis={deleteList}/>
     </Card>
   </MainContainer>
 
