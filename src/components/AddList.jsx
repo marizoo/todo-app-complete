@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components';
 import { centerIt, columnIt } from '../globalStyle';
 import Button from '../UI/Button';
+import { ErrorModal } from '../UI/ErrorModal';
 
 const Form = styled.form`
 width: 90%;
@@ -33,6 +34,7 @@ ${centerIt};
 
 const AddList = ({onCloseTheForm, onNewTasks}) => {
     const [addTask, setAddTask] = useState("")
+    const [errors, setErrors] = useState()
 
     const addTaskHandler = (ev) => {
         setAddTask(ev.target.value)
@@ -40,6 +42,14 @@ const AddList = ({onCloseTheForm, onNewTasks}) => {
 
     const submitHandler = (ev) => {
         ev.preventDefault()
+
+        if(addTask.trim().length === 0) {
+            setErrors({
+                title: 'Oopsie Daisies..',
+                message: 'Please enter valid input my love!'
+            })
+            return;
+        }
 
         const newTasks = {
             task: addTask,
@@ -55,13 +65,24 @@ const closeTheForm = (ev) => {
     onCloseTheForm(ev)
 }
 
-    return (
+const closeError = () => {
+    setErrors(null)
+}
+
+ return (
+     <>
+        {errors && (
+            <ErrorModal 
+            title={errors.title}
+            message={errors.message}
+            onCloseError={closeError}
+            />
+        )}
         <Form onSubmit={submitHandler}>
             <Input
             name='addTask'
             placeholder='add tasks'
             type='text'
-            required
             value={addTask}
             onChange={addTaskHandler}
             />
@@ -70,6 +91,7 @@ const closeTheForm = (ev) => {
                 <Button onClick={closeTheForm} bg='black'>Cancel</Button>
             </ButtonContainer>
         </Form>
+        </>
     )
 }
 
