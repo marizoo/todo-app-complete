@@ -21,11 +21,20 @@ align-items: center;
 font-size: 18px;
 font-weight: 300;
 border-radius: 10px;
+margin-bottom: 15px;
 
 &:focus {
     outline: none;
 }
 `
+
+const CheckboxContainer = styled.div``
+
+const Label = styled.label`
+margin-right: 10px;
+`
+
+const InputCheckbox = styled.input``
 
 const ButtonContainer = styled.div`
 width: 90%;
@@ -35,9 +44,14 @@ ${centerIt};
 const AddList = ({onCloseTheForm, onNewTasks}) => {
     const [addTask, setAddTask] = useState("")
     const [errors, setErrors] = useState()
+    const [addReminder, setAddReminder] = useState(false)
 
     const addTaskHandler = (ev) => {
         setAddTask(ev.target.value)
+    }
+
+    const reminderHandler = (ev) => {
+        setAddReminder(ev.currentTarget.checked)
     }
 
     const submitHandler = (ev) => {
@@ -54,11 +68,13 @@ const AddList = ({onCloseTheForm, onNewTasks}) => {
         const newTasks = {
             task: addTask,
             id : Math.floor(Math.random() * 10000),
-            reminder: false
+            reminder: addReminder
         }
 
         onNewTasks(newTasks)
         setAddTask("")
+        setAddReminder(false)
+        
 
     }
 
@@ -87,6 +103,17 @@ const closeError = () => {
             value={addTask}
             onChange={addTaskHandler}
             />
+            <CheckboxContainer>
+                <Label htmlFor='reminder'>Set Reminder: </Label>
+                <InputCheckbox 
+                id='reminder'
+                type='checkbox'
+                checked={addReminder}
+                value={addReminder}
+                onChange={reminderHandler}
+                />
+            </CheckboxContainer>
+            
             <ButtonContainer>
                 <Button type="submit">Add Task</Button>
                 <Button onClick={closeTheForm} bg='black'>Cancel</Button>
