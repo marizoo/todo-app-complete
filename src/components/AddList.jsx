@@ -53,7 +53,8 @@ const AddList = ({onCloseTheForm, onNewTasks}) => {
 
         const newTasks = {
             task: addTask,
-            id : Math.floor(Math.random() * 10000)
+            id : Math.floor(Math.random() * 10000),
+            reminder: false
         }
 
         onNewTasks(newTasks)

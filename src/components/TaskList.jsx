@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components';
 import { centerIt } from '../globalStyle';
 
@@ -12,13 +12,29 @@ display: flex;
 align-items:center;
 justify-content: space-between;
 height: 40px;
+background-color: #dbdbdb;
+margin-bottom: 15px;
+border-radius: 10px;
+cursor: pointer;
+
+&.reminder {
+    display: flex;
+align-items:center;
+justify-content: space-between;
+height: 40px;
+background-color: #c3f1b7;
+margin-bottom: 15px;
+border-radius: 10px;
+cursor: pointer;
+}
 `;
+
 
 
 const LI = styled.li`
 flex: 10;
 font-size: 16px;
-padding-left: 10px;
+padding-left: 30px;
 display: flex;
 align-items: center;
 `;
@@ -34,15 +50,27 @@ ${centerIt};
 cursor: pointer;
 `
 
-const TaskList = ({datas, ondeleteThis}) => {
+const TaskList = ({datas, ondeleteThis, onReminderToggle}) => {
+    
+    const reminderToggle = (id) => {
+        onReminderToggle(id)
+    }
+
     return (
         <UL>
-        {datas.map(data => (
-            <ListContainer key={data.id}>
-            <LI>{data.task}</LI>
-            <Delete onClick={() => ondeleteThis(data.id)}>x</Delete>
-           </ListContainer> 
-        ))}
+            {datas.length > 0 ? (
+                datas.map(data => (
+                    <ListContainer 
+                    key={data.id} 
+                    onDoubleClick={() => reminderToggle(data.id)} 
+                    className={`${data.reminder ? 'reminder' : ''}`}
+                    >
+                    
+                    <LI>{data.task}</LI>
+                    <Delete onClick={() => ondeleteThis(data.id)}>x</Delete>
+                </ListContainer> 
+                ))
+            ) : <div>No tasks boss!</div>}
            
         </UL>
     )

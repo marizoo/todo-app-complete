@@ -35,6 +35,14 @@ const App = () => {
     setShowList(showList.filter(list => list.id !== id))
   }
 
+  const toggleReminder = (id) => {
+    setShowList(
+      showList.map(list => 
+        list.id === id ? {...list, reminder: !list.reminder } : list
+        )
+    )
+  }
+
   return (
   <MainContainer>
     <Card>
@@ -46,7 +54,7 @@ const App = () => {
       onNewTasks={showAddedList}
       />
       )}
-      <TaskList datas={showList} ondeleteThis={deleteList}/>
+      <TaskList datas={showList} ondeleteThis={deleteList} onReminderToggle={toggleReminder}/>
     </Card>
   </MainContainer>
 
