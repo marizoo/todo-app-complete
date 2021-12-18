@@ -28,8 +28,6 @@ left: 0;
 height: 100vh;
 width: 100vw;
 background: transparent;
-/* top: 40%;
-left: 50%; */
 ${centerIt};
 z-index: 6;
 `

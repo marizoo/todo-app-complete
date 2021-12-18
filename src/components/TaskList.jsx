@@ -18,7 +18,7 @@ border-radius: 10px;
 cursor: pointer;
 
 &.reminder {
-    display: flex;
+display: flex;
 align-items:center;
 justify-content: space-between;
 height: 40px;
@@ -56,6 +56,8 @@ const TaskList = ({datas, ondeleteThis, onReminderToggle}) => {
         onReminderToggle(id)
     }
 
+
+
     return (
         <UL>
             {datas.length > 0 ? (
@@ -64,6 +66,7 @@ const TaskList = ({datas, ondeleteThis, onReminderToggle}) => {
                     key={data.id} 
                     onDoubleClick={() => reminderToggle(data.id)} 
                     className={`${data.reminder ? 'reminder' : ''}`}
+                    
                     >
                     
                     <LI>{data.task}</LI>
